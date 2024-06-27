@@ -1,0 +1,61 @@
+create table Colegio(
+	Id INTEGER primary key,
+	Nome VARCHAR (100),
+	Endereco VARCHAR (100)
+)
+create table Turma(
+	Numero INTEGER primary key,
+	serie VARCHAR (3),
+	Quantidade_Alunos INTEGER,
+	Colegio_Id INTEGER,
+	foreign key (Colegio_Id)references Colegio(Id)
+)
+create table Professor(
+	CPF VARCHAR (14) primary key,
+	Nome VARCHAR (100),
+	Telefone Varchar (17),
+	Email VARCHAR (100),
+	Salario FLOAT
+)
+create table ComponenteCurricular(
+	Id INTEGER primary key,
+	Nome VARCHAR (100),
+	Ementa VARCHAR (100)
+)
+create table Aluno(
+	CGM INTEGER primary key,
+	Nome VARCHAR (100),
+	Data_Nacimento VARCHAR (10),
+	Turma_Numero INTEGER,
+	foreign key (Turma_Numero)references Turma(Numero)
+)
+create table Diciplina(
+	Id INTEGER primary key,
+	Carga_Horaria INTEGER,
+	Turma_Numero INTEGER,
+	Professor_CPF VARCHAR(14),
+	CompCurric_Id INTEGER,
+	foreign key (Turma_Numero)references Turma(Numero),
+	foreign key (Professor_CPF)references Professor(CPF),
+	foreign key (CompCurric_Id)references ComponenteCurricular(Id)
+)
+create table Conteudo(
+	Id INTEGER primary key,
+	Titulo VARCHAR(100),
+	Numero INTEGER,
+	URL_Material VARCHAR(200),
+	CompCurric_Id INTEGER,
+	foreign key (CompCurric_Id)references ComponenteCurricular(Id)
+)
+
+create table Aula(
+	Id INTEGER primary key,
+	Data VARCHAR(10),
+	Observacoes VARCHAR(200),
+	Aluno_CGM INTEGER,
+	Diciplina_Id INTEGER,
+	Conteudo_Id INTEGER,
+	foreign key (Aluno_CGM)references Aluno(CGM),
+	foreign key (Diciplina_Id)references Diciplina(Id),
+	foreign key (Conteudo_Id)references Conteudo(Id)
+)
